@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="./assets/css/mve.css" rel="stylesheet" />
+    <title>Tools For UE</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #171616;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .tools-wrapper {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tools-header {
+            display: flex;
+            flex-direction: column;
+            /* justify-content: space-between; */
+        }
+
+        .tools-content {
+            flex: 1;
+        }
+
+        .tools-footer {
+            width: 100%;
+            height: 40px;
+            overflow: hidden;
+            overflow-x: auto;
+        }
+
+        .tools-footer-list {
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="tools-wrapper" id="bhTools">
+        <header class="tools-header">
+            <div class="logo">
+                <img src="./assets/img/logo_white.svg" />
+                <img src="./assets/img/logo_txt.svg" />
+            </div>
+            <h1>CG BY UNREAL ENGINE</h1>
+            <p>Just Personal Production @Juvos</p>
+        </header>
+
+        <section class="tools-content"></section>
+        <footer class="tools-footer">
+            <div class="tools-footer-list">
+                <component3 label="2131"></component3>
+                <icon-tab :label="'工具集'"></icon-tab>
+                <is-tab label="555"></is-tab>
+                <component4></component4>
+            </div>
+        </footer>
+    </main>
+</body>
+<script type="text/javascript" src="./assets/js/vue.min.js"></script>
+<script type="text/template" id="iconTab">
+    <div>
+        <img v-if="icon" :src="iconImg" />
+        {{label}}
+    </div>
+</script>
+<template id="isTab">
+    <div>
+        <img v-if="icon" :src="iconImg" />
+        {{label}}
+    </div>
+</template>
+<template id="component3">
+    <div>大{{label}}
+    </div>
+</template>
+<template id="component4">
+    //这个div是根标签
+    <div>
+        <h1>全局组件（方式三）</h1>
+    </div>
+</template>
+<script type="text/javascript">
+    Vue.component("iconTab", {
+        props: ['label', 'icon', 'iconImg'],
+        template: "#iconTab",
+
+    });
+    Vue.component("isTab", {
+        props: ['label', 'icon', 'iconImg'],
+        template: "#isTab",
+    });
+    Vue.component("component3", {
+        props: ['label'],
+        template: "#component3"
+    });
+
+    Vue.component("component4", {
+        template: "#component4"
+    });
+</script>
+<script type="text/javascript">
+
+    var base = new Vue({
+        el: "#bhTools",
+        data: {
+            visible: false
+        },
+        methods: {
+            show: function () {
+                this.visible = true;
+            }
+        }
+    });
+</script>
+
+</html>
