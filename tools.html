@@ -138,6 +138,29 @@
             }
         }
     });
+
+    OpenPup(12);
+
+    function OpenPup(val) {
+        let xhr = new XMLHttpRequest() // 
+        let okStatus = document.location.protocol === "file:" ? 0 : 200; // 
+        // xhr.open("GET", val.url, false); // 线上链接地址 
+        xhr.open("GET", "./assets/txt/text.txt", false); // public文件夹下的绝对路径 
+        xhr.overrideMimeType("text/html;charset=utf-8")
+        xhr.send(null)
+        console.log(xhr.responseText) // xhr.responseText为文本中的内容
+        copyToClip(xhr.responseText)
+    }
+
+    function copyToClip(val) {
+        let oInput = document.createElement('input')
+        oInput.value = val;
+        document.body.appendChild(oInput)
+        oInput.select() // 选择对象;
+        document.execCommand('Copy') // 执行浏览器复制命令
+        oInput.remove()
+        console.log("copyToClip ->", val)
+    }
 </script>
 
 </html>
