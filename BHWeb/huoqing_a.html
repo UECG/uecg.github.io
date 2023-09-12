@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+  <script type="text/javascript" src="./ue5.js"></script>
+</head>
+
+<body>
+  <div id="container" style="height: 100%;width: 100%;"></div>
+
+  <script type="text/javascript" src="./echarts.min.js"></script>
+  <script type="text/javascript">
+
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    var option;
+    // x轴数据
+    const xAxisData = [
+      "08:21",
+      "08:22",
+      "08:23",
+      "08:24",
+      "08:25",
+      "08:26",
+      "08:27",
+      "08:28",
+      "08:29",
+    ]
+
+    // series中数据
+    const seriesData = [
+      3.07,
+      3.17,
+      2.93,
+      2.98,
+      3.02,
+      3.27,
+      3.54,
+      50.01,
+      464.03,
+      1051.66,
+      1651.11,
+      2075.18,
+      2204.91,
+      2170.55,
+      1908.83,
+      1488.4,
+      893.61,
+      312.64,
+      17.07,
+      2.41,
+      2.35,
+      5.33,
+      3.24,
+      3.41,
+      0
+    ]
+
+    option = {
+      color: ["#029AFE"],
+      tooltip: {
+        trigger: "axis",
+        textStyle: {
+          color: "#fff", fontSize: 12
+        },
+        className: "tooltip",
+        order: "seriesDesc",
+        renderMode: "html",
+        backgroundColor: "#1b366a", // 设置背景颜色
+        borderColor: "#1b366a", // 边框颜色
+        formatter: (params) => {
+          return `
+            ${params[0].name}  <br/>
+            ${params[0].marker}
+            ${params[0].seriesName} :
+            ${params[0].value == 0 ? "-" : Number(params[0].value).toLocaleString()}km/h`;
+        },
+      },
+
+      grid: {
+        top: "10%",
+        left: 12,
+        right: 12,
+        bottom: "3%",
+        containLabel: true,
+      },
+      xAxis: [
+        {
+          type: "category",
+          splitLine: {
+            show: false,
+          },
+          data: xAxisData,
+        },
+      ],
+      yAxis: [
+        {
+          type: "value",
+          splitLine: {
+            show: true,
+            lineStyle: {
+              type: [6, 8],
+              dashOffset: 1,
+              color: "rgba(255, 255, 255, 0.1)",
+            },
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#ccc",
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+        },
+      ],
+      series: [
+        {
+          name: "风速变化",
+          type: "line",
+          data: seriesData,
+          symbol: "none",
+          smooth: true,
+          cursor: "default",
+          width: 2,
+          areaStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(
+                0,
+                0,
+                0,
+                1,
+                [
+                  {
+                    offset: 0,
+                    color: "rgba(2, 154, 254,.4)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(2, 154, 254, 0)",
+                  },
+                ],
+                false
+              ),
+              shadowColor: "rgba(2, 154, 254, .3)",
+              shadowBlur: 2,
+            },
+          },
+        },
+      ],
+    };
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+
+    let StartTime = new Date('2023-8-30 08:29:00')
+    let currentTime = new Date(StartTime.getTime()+60*1000);
+    setInterval(() => {
+      currentTime = new Date(currentTime.getTime()+60*1000);
+      xAxisData.push(currentTime.getHours()+":"+currentTime.getMinutes());
+      seriesData.push(Math.random()*100);
+      option = {
+        color: ["#029AFE"],
+        tooltip: {
+          trigger: "axis",
+          textStyle: {
+            color: "#fff", fontSize: 12
+          },
+          className: "tooltip",
+          order: "seriesDesc",
+          renderMode: "html",
+          backgroundColor: "#1b366a", // 设置背景颜色
+          borderColor: "#1b366a", // 边框颜色
+          formatter: (params) => {
+            return `
+            ${params[0].name}  <br/>
+            ${params[0].marker}
+            ${params[0].seriesName} :
+            ${params[0].value == 0 ? "-" : Number(params[0].value).toLocaleString()}km/h`;
+          },
+        },
+
+        grid: {
+          top: "10%",
+          left: 12,
+          right: 12,
+          bottom: "3%",
+          containLabel: true,
+        },
+        xAxis: [
+          {
+            type: "category",
+            
+            data: xAxisData,
+          },
+        ],
+        yAxis: [
+          {
+            type: "value",
+          splitLine: {
+            show: true,
+            lineStyle: {
+              type: [6, 8],
+              dashOffset: 1,
+            },
+          },
+          axisLine: {
+            show: true,
+          },
+          axisTick: {
+            show: false,
+          },
+           
+          },
+        ],
+        series: [
+          {
+            name: "风速变化",
+            type: "line",
+            data: seriesData,
+            symbol: "none",
+            smooth: true,
+            cursor: "default",
+            width: 2,
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: "rgba(2, 154, 254,.4)",
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(2, 154, 254, 0)",
+                    },
+                  ],
+                  false
+                ),
+                shadowColor: "rgba(2, 154, 254, .3)",
+                shadowBlur: 2,
+              },
+            },
+          },
+        ],
+      };
+      myChart.setOption(option);
+    }, 500)
+
+  </script>
+</body>
+
+</html>

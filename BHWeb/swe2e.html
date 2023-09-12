@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+
+  <script type="text/javascript" src="./echarts.min.js"></script>
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    let xLabel = ['5月18日', '5月25日', '5月29日', '5月30日', '5月31日', '6月1日', '6月2日'];
+    let dataValue = [0.1492887, 0.1588793, 0.913194, 0.10812932, 0.2825621, 0, 0];
+    let option = {
+
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          lineStyle: {
+            color: 'rgb(126,199,255)',
+          },
+        },
+      },
+      legend: {
+
+        left: 'center',
+        bottom: 80,
+        showLabel: !0,
+        itemHeight: 10,
+        textStyle: {
+          color: '#fff',
+          fontSize: 14,
+          padding: [0, 8, 0, 8]
+        }
+      },
+      grid: {
+        top: '30%',
+        left: '10%',
+        right: '8%',
+        bottom: '20%',
+      },
+      xAxis: [
+        {
+          type: 'category',
+          // boundaryGap: false,
+          axisLine: {
+            //坐标轴轴线相关设置。数学上的x轴
+            show: true,
+            lineStyle: {
+              color: 'rgb(41,188,245)',
+            },
+          },
+          axisLabel: {
+            //坐标轴刻度标签的相关设置
+            textStyle: {
+              color: '#FFFFFF',
+              fontSize: 12,
+            },
+          },
+          splitLine: {
+            show: false,
+            lineStyle: {
+              color: '#233653',
+            },
+          },
+          axisTick: {
+            show: false,
+          },
+          data: xLabel,
+        },
+      ],
+      yAxis: [
+        {
+          name: "",
+          nameTextStyle: {
+            color: "#fff",
+            fontSize: 20,
+            padding: [0, 40, 30, 0],
+
+
+          },
+          type: 'value',
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: '#1160a0',
+              type: 'dashed'
+            },
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: '#008de7',
+            },
+          },
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: '#fff',
+              fontSize: 14
+            }
+          },
+          axisTick: {
+            show: false,
+          },
+        },
+
+      ],
+      series: [
+        {
+          name: '浓度',
+          type: 'line',
+          symbol: 'circle',
+          smooth: true,
+          lineStyle: {
+            z: 1,
+            normal: {
+              width: 3,
+              color: '#fb6663',
+            },
+          },
+          itemStyle: {
+            normal: {
+              color: '#fd8180',
+              label: {
+                show: true,
+                color: '#fff',
+                position: 'top',
+                formatter: function (res) {
+                  if (res.value) {
+                    return res.value
+                  } else {
+                    return 0
+                  }
+                },
+              },
+            },
+
+          },
+          symbolSize: 8,
+          areaStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(
+                0,
+                1,
+                1,
+                1,
+                [
+                  {
+                    offset: 1,
+                    color: '#fb666330',
+                  },
+                  {
+                    offset: 1,
+                    color: '#fb666320',
+                  },
+                  {
+                    offset: 1,
+                    color: '#fb666310',
+
+                  },
+
+                ],
+                false
+              ),
+            },
+          },
+          data: dataValue,
+        },
+        {
+
+          itemStyle: {
+            normal: {
+              color: '#fd8180',
+              label: {
+                show: true,
+                color: '#fe7673',
+                position: 'bottom',
+                padding: [0, 0, 0, 10],
+                z: 999,
+                formatter: function (res) {
+                  if (res.value) {
+                    return Math.round((res.value / 823) * 10000) / 100 + "%"
+                  } else {
+                    return 0
+                  }
+                },
+              },
+            },
+
+          },
+          symbolSize: 8,
+          areaStyle: {
+            normal: {
+              color: new echarts.graphic.LinearGradient(
+                0,
+                0,
+                0,
+                1,
+                [
+                  {
+                    offset: 0,
+                    color: '#fb666330',
+                  },
+                  {
+                    offset: 0.6,
+                    color: '#fb666320',
+                  },
+                  {
+                    offset: 1,
+                    color: '#fb666310',
+                  },
+                ],
+                false
+              ),
+            },
+          },
+          data: dataValue,
+        },
+
+      ]
+    }
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+
+</html>

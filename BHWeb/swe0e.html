@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+
+  <script type="text/javascript" src="./echarts.min.js"></script>
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    var option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        },
+    },
+    color: ["#18f0fd", "#00c4fd", "#3f90ff"],
+    legend: {
+        show: true,
+        top: '2%',
+        icon: "rect",
+        itemWidth: 15, // 图例标记的图形宽度。
+        itemHeight: 15, //  图例标记的图形高度。
+        textStyle: {
+            color: '#aaa',
+            fontSize: 10,
+            padding: [0, 8, 0, 8]
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: [{
+        type: 'category',
+        axisLine: {
+            //坐标轴轴线相关设置。数学上的x轴
+            show: true,
+            lineStyle: {
+                color: 'rgb(41,188,245)',
+            },
+        },
+        axisLabel: {
+            //坐标轴刻度标签的相关设置
+            textStyle: {
+                color: '#aaa',
+                fontSize: 10,
+            },
+        },
+        splitLine: {
+            show: false,
+            lineStyle: {
+                color: '#233653',
+            },
+        },
+        axisTick: {
+            show: false,
+        },
+        data: ['2023年1月', '2023年2月', '2023年3月', '2023年4月', '2023年5月', '2023年6月']
+    }],
+    yAxis: [{
+        name: '分析统计',
+        nameTextStyle: {
+            color: "#aaa",
+            fontSize: 10,
+            padding: [0, 60, 0, 0]
+        },
+        // minInterval: 1,
+        type: 'value',
+        splitLine: {
+            show: true,
+            lineStyle: {
+                color: '#1160a0',
+                type: 'dashed'
+            },
+        },
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: '#008de7',
+            },
+        },
+        axisLabel: {
+            show: true,
+            textStyle: {
+                color: '#aaa',
+                fontSize: 10
+            }
+        },
+        axisTick: {
+            show: false,
+        },
+        splitLine: false
+    },
+
+    ],
+    series: [
+
+        {
+            name: '常规五参数',
+            type: 'bar',
+            stack: '常规五参数',
+            data: [620, 732, 701, 734, 1090, 1130, 1120]
+        },
+        {
+            name: '氨氮水质',
+            type: 'bar',
+            stack: '氨氮水质',
+            data: [120, 132, 101, 134, 290, 230, 220]
+        },
+        {
+            name: '综合生物毒性',
+            type: 'bar',
+            stack: '综合生物毒性',
+            data: [120, 132, 101, 134, 290, 230, 220]
+        },
+
+    ]
+};
+   
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+
+</html>

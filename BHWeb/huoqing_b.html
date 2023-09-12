@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  </style>
+  <script type="text/javascript" src="./ue5.js"></script>
+</head>
+
+<body>
+  <div id="container" style="height: 100%;width: 100%;"></div>
+
+  <script type="text/javascript" src="./echarts.min.js"></script>
+  <script type="text/javascript">
+
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+
+    var option;
+    let datas = [
+  { value: 40,value1: 188.82, name: '冷杉林', rate: '40%' },
+  { value: 34,value1: 33.45, name: '铁杉林', rate: '34%' },
+  { value: 8,value1: 28.1, name: '裸地', rate: '8%' },
+  { value: 6,value1: 16.1, name: '阔叶林', rate: '6%' },
+  { value: 5.5,value1: 15.1, name: '草地', rate: '5.5%' },
+  { value: 2.5,value1: 12.1, name: '灌丛', rate: '2.5%' },
+  { value: 1.5,value1: 11.41, name: '橡树林', rate: '1.5%' },
+  { value: 1.5,value1: 18.1, name: '云杉林', rate: '1.5%' },
+  { value: 1,value1: 8.1, name: '竹林', rate: '1%' },
+];
+
+let datap = [];
+let colorList = ['#3399ff', '#85c285', '#ffc266', '#ff8585', '#c299ff'];
+let color = colorList.splice(0, datas.length);
+for (let i = 0; i < datas.length; i++) {
+  datap.push({
+    value: datas[i].value,
+   //  name: 'rosetemp' + i,
+  });
+  color.push('#FFFFFF');
+}
+datap = datas.concat(datap);
+
+option = {
+  legend: {
+    bottom: '5%',
+    left: '5%',
+    orient: 'vertical',
+    data: datas,
+    icon: 'circle',
+    formatter(name) {
+      const item = datas.filter((item) => item.name === name)[0];
+      return `{name|${name}}{value1| ${item.value1+'（公顷）}'}{name2|${item.rate}}`;
+    },
+    textStyle: {
+      rich: {
+        name: {
+          color: '#c1e2ff',
+          fontSize: 10,
+        },
+        name2: {
+          color: '#c1e2ff',
+          fontSize: 10,
+        },
+        value1: {
+          color: '#c1e2ff',
+          fontSize: 10,
+        },
+      },
+    },
+  },
+  title: {
+    text: '保护区植被覆盖情况',
+    top: '5%',
+    textAlign: 'center',
+    left: '49.5%',
+    textStyle: {
+      color: '#0297f9',
+      fontSize: 14,
+      fontWeight: '600',
+    },
+    subtext:'重点保护植被',
+    subtextStyle:{
+      color: '#0297f9',
+      fontSize: 12,
+      fontWeight: '600',
+      margin:[100,0,100,0]
+    }
+  },
+  color: color,
+  series: [
+   //  {
+   //    type: 'pie',
+   //    radius: [40, 100],
+   //    center: ['50%', '58%'],
+   //    roseType: 'radius',
+   //    silent: true,
+   //    startAngle: 180,
+   //    legendHoverLink: false,
+   //    itemStyle: {
+   //      borderRadius: 0,
+   //    },
+   //    label: {
+   //      show: false,
+   //    },
+   //    emphasis: {
+   //      label: {
+   //        show: false,
+   //      },
+   //    },
+   //    color: ['#f6f8fe',],
+   //    data: [
+   //      { value: 10, name: 'r' },
+   //      { value: 10, name: 'ro' },
+   //    ],
+   //  },
+    {
+      type: 'pie',
+      radius: [40, 100],
+      center: ['60%', '60%'],
+      roseType: 'radius',
+      startAngle: 180,
+      legendHoverLink: false,
+      label: {
+        show: true,
+        position: 'inside',
+        color: '#fff',
+        formatter(params) {
+          return params.data.rate;
+        },
+      },
+      emphasis: {
+        label: {
+          show: true,
+        },
+      },
+      data: datap,
+    },
+  ],
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+
+
+
+  </script>
+</body>
+
+</html>
