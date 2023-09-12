@@ -10,6 +10,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      background: none;
     }
   </style>
   <script type="text/javascript" src="./ue5.js"></script>
@@ -20,6 +21,12 @@
 
   <script type="text/javascript" src="./echarts.min.js"></script>
   <script type="text/javascript">
+    let url = location.href;
+    let queryArr = url.split("?");
+    let paramsArr = queryArr.length>1?queryArr[1].split("&"):["type=1"];
+    let typeArr = paramsArr[0].split("=");
+    let baseType = typeArr[1];
+
     function formateWeekDay(dayIndex){
       var currentDate = new Date();
       var previousWeekDate = new Date();
@@ -177,13 +184,13 @@
         }, {
           name: '湿度',
           type: 'line',
-          data: [30, 20, 80, 20, 80, 64, 71],
+          data: [30, 20, 80, 20, 60, 64, 71],
           smooth: true,
           yAxisIndex: 1
         }, {
           name: '风速',
           type: 'line',
-          data: [6, 2, 3, 6, 8, 7, 2],
+          data: [6, 2, 3, 6, 1, 2, 2],
           smooth: true,
           yAxisIndex: 2
         }, {
@@ -211,13 +218,13 @@
         }, {
           name: '湿度',
           type: 'line',
-          data: [30, 20, 40, 20, 40, 64, 71],
+          data: [30, 20, 40, 20, 40, 34,31],
           smooth: true,
           yAxisIndex: 1
         }, {
           name: '风速',
           type: 'line',
-          data: [6, 2, 3, 6, 8, 7, 2],
+          data: [6, 2, 3, 6, 3, 7, 2],
           smooth: true,
           yAxisIndex: 2
         }, {
@@ -238,24 +245,28 @@
 
     option = {...baseOption,...firstOption};
     if (option && typeof option === 'object') {
-      myChart.setOption(option);
+      setType(baseType)
     }
 
     window.addEventListener('resize', myChart.resize);
 
 
-    ue.interface.setType = function(type){
+    function setType(type){
       switch(type){
         case "1":
+        console.log("case 1",type)
           option = {...baseOption,...firstOption};
           break;
         case "2":
+        console.log("case 2",type)
           option = {...baseOption,...secondOption};
           break;
         case "3":
+        console.log("case 3",type)
           option = {...baseOption,...thridOption};
           break;
         default:
+        console.log("default",type)
           break;
       }
       myChart.setOption(option);
